@@ -1,0 +1,76 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context=".MainActivity"
+    android:visibility="visible">
+
+
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:text="@string/Foreword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <EditText
+            android:id="@+id/hour"
+            android:inputType="numberDecimal"
+            android:hint="@string/zeros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@color/abc_search_url_text_selected"
+            android:textColorHint="@color/abc_primary_text_material_light" />
+        <TextView
+            android:text="@string/between"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/minute"
+            android:inputType="numberDecimal"
+            android:hint="@string/zeros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColorHint="@color/abc_primary_text_material_light" />
+        <TextView
+            android:text="@string/between"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/second"
+            android:inputType="numberDecimal"
+            android:hint="@string/zeros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColorHint="@color/abc_primary_text_material_light" />
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/goFocus"
+        android:text="START FOCUS"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
