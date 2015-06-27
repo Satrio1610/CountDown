@@ -3,74 +3,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
-    tools:context=".MainActivity"
-    android:visibility="visible">
-
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/mainText"
-        android:layout_marginTop="20dp"
-        android:textSize="30sp"
-        android:text="@string/Foreword"
+        android:id="@+id/title"
+        android:text="@string/title"
+        android:textSize="25sp"
+        android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="@color/abc_primary_text_disable_only_material_light"
+        android:textStyle="normal"
+        />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:baselineAligned="false"
+        >
+
+
+
         <EditText
             android:id="@+id/hour"
             android:inputType="numberDecimal"
-            android:hint="@string/zeros"
+            android:textSize="25sp"
+            android:hint="@string/hour"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="@color/abc_search_url_text_selected"
-            android:textColorHint="@color/abc_primary_text_material_light" />
+            android:layout_height="wrap_content" />
         <TextView
-            android:text="@string/between"
-            android:gravity="center"
+            android:id="@+id/segment"
+            android:textSize="25sp"
+            android:text="@string/segment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/minute"
+            android:textSize="25sp"
             android:inputType="numberDecimal"
-            android:hint="@string/zeros"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColorHint="@color/abc_primary_text_material_light" />
-        <TextView
-            android:text="@string/between"
-            android:gravity="center"
+            android:hint="@string/minute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/second"
-            android:inputType="numberDecimal"
-            android:hint="@string/zeros"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColorHint="@color/abc_primary_text_material_light" />
-
-
 
 
     </LinearLayout>
 
     <Button
         android:id="@+id/goFocus"
-        android:text="START FOCUS"
-        android:textStyle="bold"
         android:layout_marginTop="30dp"
+        android:text="@string/button1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:onClick="focusGo"/>
 </LinearLayout>
