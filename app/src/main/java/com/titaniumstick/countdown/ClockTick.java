@@ -1,6 +1,8 @@
 package com.titaniumstick.countdown;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,10 +19,16 @@ public class ClockTick extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock_tick);
+        // start countdown
         TextView countDown = (TextView) findViewById(R.id.clock);
         Intent intent = getIntent();
         Long time = intent.getLongExtra(MainActivity.SEND_TIME, 0);
-        CountClock cod = new CountClock(time,1000,countDown);
+
+        // set up wifi scanner
+        WifiManager mainWifiObj;
+        mainWifiObj = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+
+        CountClock cod = new CountClock(time,1000,countDown, mainWifiObj);
         cod.start();
 
 
@@ -37,9 +45,12 @@ public class ClockTick extends ActionBarActivity {
          *                          {@link #onTick(long)} callbacks.
          */
         private TextView text;
-        public CountClock(long millisInFuture, long countDownInterval, TextView ntext) {
+        private WifiManager wf;
+        public CountClock(long millisInFuture, long countDownInterval, TextView ntext, WifiManager wifi) {
             super(millisInFuture, countDownInterval);
             text = ntext;
+            wf = wifi;
+
         }
 
         @Override
@@ -49,6 +60,10 @@ public class ClockTick extends ActionBarActivity {
             Long second = millisUntilFinished/1000%60;
 
             text.setText(hour + ":" + minute + ":" + second);
+
+            if( wf.isWifiEnabled()) {
+                wf.setWifiEnabled(false);
+            }
         }
 
         @Override
