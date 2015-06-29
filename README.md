@@ -14,10 +14,15 @@ Achievement Aim: Vostok( Beginner Level)  - Might switch to Gemini
 
 **PLANNED FEATURES**
 **User Stories ( new users stories in bold)**
+
 1. As a user I want to be able to list down all the tasks that need to be done so I can better keep track of what need to be done 
+
 2. As a user I want to be able to set a time limit for each tasks so that I can organize myself for the day better.  
+
 3. As a user I want to be able to have less distraction so my mind can be forced to focus on the task
+
 4. As a user I want to have a short-term goal so that can give me more motivation to do my work 
+
 **5. As a user, I would like to have more options to determine how I would want to approach my given task.**
 
 **Features – Phone Application(Android):** 
