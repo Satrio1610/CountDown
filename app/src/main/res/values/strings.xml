@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">CountDown</string>
-    <string name="hour">HH</string>
-    <string name="minute">MM</string>
     <string name="button1">Start Focus!</string>
-    <string name="title">CHOOSE FOCUS DURATION</string>
-    <string name="segment">:</string>
+    <string name="title">HABIT INDUCIVE TIMER</string>
+    <string name="cycleText">Number of Cycle    :</string>
+    <string name="workText">Work Duration/cycle :</string>
+    <string name="breakText">Break Duration/cycle :</string>
+    <string name="defaultOpt">0 minutes</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_clock_tick">ClockTick</string>
-
+    <string name="title_activity_clock_tick">Focus Timer</string>
     <string name="hello_world">Hello world!</string>
 </resources>

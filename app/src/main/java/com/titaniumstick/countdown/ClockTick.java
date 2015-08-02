@@ -2,18 +2,24 @@ package com.titaniumstick.countdown;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 
 public class ClockTick extends ActionBarActivity {
+
+    int clockCounter; // counter to keep track of the number cycle of work-break the user has gone through
+    int noCycle; // number of cycle the user is going to go through
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,19 +28,18 @@ public class ClockTick extends ActionBarActivity {
         // start countdown
         TextView countDown = (TextView) findViewById(R.id.clock);
         Intent intent = getIntent();
-        Long time = intent.getLongExtra(MainActivity.SEND_TIME, 0);
-
-        // set up wifi scanner
-        WifiManager mainWifiObj;
-        mainWifiObj = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-
-        CountClock cod = new CountClock(time,1000,countDown, mainWifiObj);
+        Long time = intent.getLongExtra(MainActivity.SEND_BREAK, 0);
+        CountClock cod = new CountClock(time,1000,countDown);
         cod.start();
 
 
 
 
+
     }
+
+    
+
 
     public class CountClock extends CountDownTimer {
         /**
@@ -45,11 +50,9 @@ public class ClockTick extends ActionBarActivity {
          *                          {@link #onTick(long)} callbacks.
          */
         private TextView text;
-        private WifiManager wf;
-        public CountClock(long millisInFuture, long countDownInterval, TextView ntext, WifiManager wifi) {
+        public CountClock(long millisInFuture, long countDownInterval, TextView ntext) {
             super(millisInFuture, countDownInterval);
             text = ntext;
-            wf = wifi;
 
         }
 
@@ -61,9 +64,6 @@ public class ClockTick extends ActionBarActivity {
 
             text.setText(hour + ":" + minute + ":" + second);
 
-            if( wf.isWifiEnabled()) {
-                wf.setWifiEnabled(false);
-            }
         }
 
         @Override

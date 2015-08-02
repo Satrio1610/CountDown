@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#fffff8f9">
 
     <TextView
         android:id="@+id/title"
@@ -19,6 +19,31 @@
         android:textStyle="normal"
         />
 
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:baselineAligned="false"
+        >
+        <TextView
+            android:text="@string/cycleText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/cycleButton"
+            android:text="2"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:onClick="clickCycle"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,28 +53,39 @@
         android:baselineAligned="false"
         >
 
-
-
-        <EditText
-            android:id="@+id/hour"
-            android:inputType="numberDecimal"
-            android:textSize="25sp"
-            android:hint="@string/hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
         <TextView
-            android:id="@+id/segment"
-            android:textSize="25sp"
-            android:text="@string/segment"
-            android:layout_width="wrap_content"
+            android:text="@string/workText"
+            android:layout_width="150dp"
             android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/minute"
-            android:textSize="25sp"
-            android:inputType="numberDecimal"
-            android:hint="@string/minute"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/workButton"
+            android:text="@string/defaultOpt"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:onClick="clickWork"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:baselineAligned="false"
+        >
+
+        <TextView
+            android:text="@string/breakText"
+            android:layout_width="150dp"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/breakButton"
+            android:text="@string/defaultOpt"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:onClick="clickBreak"/>
 
 
     </LinearLayout>
@@ -62,4 +98,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:onClick="focusGo"/>
+
+
+
 </LinearLayout>
