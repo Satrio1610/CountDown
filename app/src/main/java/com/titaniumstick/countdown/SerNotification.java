@@ -21,33 +21,93 @@ public class SerNotification extends IntentService {
     public SerNotification() {
         super("SerNotification");
     }
+    Long nCycle;
+    Long wHour;
+    Long bHour;
+    long tHour = -1;
+    String workText = "Sharpen your focus! Flex your muscle! It's time to give your best(again)!";
+    String workTitle = " Back to Work!";
+    String breakText ="Relax your mind! Do some stretching! Keep in mind there are still some works left to do!";
+    String breakTitle="Breaktime!";
+    String cycleTitle ="TIMER FINISHED!!";
+    String cycleText = "Pat yourself in the back for a job well done!";
+    PendingIntent pendingTimerStart;
+
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Long time = intent.getLongExtra(MainActivity.SEND_BREAK,1000);
+        bHour = intent.getLongExtra(MainActivity.SEND_BREAK,1000);
+        wHour = intent.getLongExtra(MainActivity.SEND_WORK, 1000);
+        nCycle = intent.getLongExtra(MainActivity.SEND_CYCLE, 1000);
 
-        Intent notificationStart = new Intent ( this,ClockTick.class);
+        Intent timerNotification = new Intent ( this,ClockTick.class);
 
-        PendingIntent pendingStart = PendingIntent.getActivity(this,0,notificationStart,PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingTimerStart = PendingIntent.getActivity(this, 0, timerNotification,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        final NotificationCompat.Builder serBuilder = new NotificationCompat.Builder(this)
+        final NotificationCompat.Builder serPhaseNotif = new NotificationCompat.Builder(this)
+                .setContentIntent(pendingTimerStart)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Finished!")
-                .setContentText("Wifi and Data is returned to the original state")
                 .setAutoCancel(true);
 
-        final int serNotificationID = 001;
+        final int serPhaseNotificationID = 001;
         final NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        serBuilder.setContentIntent(pendingStart);
-
         Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mNotifyMgr.notify(serNotificationID,serBuilder.build());
+        for(long iter = 1; iter < nCycle; iter ++) {
+
+            if ( iter== nCycle -1 ) {
+                tHour = tHour + wHour;
+
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (ClockTick.isPaused) {
+                            serPhaseNotif.setContentTitle(cycleTitle)
+                                    .setContentText(cycleText);
+
+                            mNotifyMgr.cancel(serPhaseNotificationID);
+                            mNotifyMgr.notify(serPhaseNotificationID, serPhaseNotif.build());
+                        }
+                    }
+                }, tHour);
+
+            } else if (iter%2 != 0) {
+                tHour = tHour + wHour;
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if(ClockTick.isPaused) {
+                            serPhaseNotif.setContentTitle(breakTitle)
+                                    .setContentText(breakText);
+                            mNotifyMgr.cancel(serPhaseNotificationID);
+                            mNotifyMgr.notify(serPhaseNotificationID, serPhaseNotif.build());
+                        }
+                    }
+                }, tHour);
+
+            } else {
+
+                tHour = tHour + bHour;
+
+                timer.schedule(new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        if(ClockTick.isPaused){
+                            serPhaseNotif.setContentTitle(workTitle)
+                                    .setContentText(workText);
+
+                            mNotifyMgr.cancel(serPhaseNotificationID);
+                            mNotifyMgr.notify(serPhaseNotificationID, serPhaseNotif.build());
+                        }
+
+                    }
+                },tHour);
+
             }
-        },time);
+        }
 
     }
 

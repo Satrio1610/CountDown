@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+
 /*
 this .java is used to allow user to set up the habit timer which will tell them when to work and when to take a break
 No restriction to the phone utility will be imposed as of now. Once started, the app will simply send cue to the users ( via vibratiob,
@@ -27,7 +29,7 @@ users'setup. For example. if chosen number of cycle is 1, break time will remain
 Once the users has finished deciding the cycle's characteristic, they should push the go focus button. This will gather the user's input, send it to the next activity
 which will display the timer and the cycle status period and carry out further necessary function.
  */
-public class MainActivity extends AppCompatActivity implements MinuteDialog.NoticeDialogListener, WorkBreakDialog.NoticeDialogListener, BreakDialog.NoticeDialogListener  {
+public class MainActivity extends AppCompatActivity implements MinuteDialog.NoticeDialogListener, WorkBreakDialog.NoticeDialogListener, BreakDialog.NoticeDialogListener, ConfirmationDialog.NoticeDialogListener  {
     public final static String SEND_CYCLE = "com.titaniumstick.countdownver2.CYCLE";
     public final static String SEND_WORK = "com.titaniumstick.countdownver2.WORK";
     public final static String SEND_BREAK = "com.titaniumstick.countdownver2.BREAK";
@@ -36,9 +38,11 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
     Button workSet;
     Button breakSet;
     // result variable
-    long cycleNo = 2;
+    long cycleNo = 4;
     long workNo = 0;
     long breakNo = 0;
+
+    TextView breakT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
         cycleSet = (Button) findViewById(R.id.cycleButton);
         workSet = (Button) findViewById(R.id.workButton);
         breakSet = (Button) findViewById(R.id.breakButton);
+        breakT = (TextView) findViewById(R.id.breakText);
 
 
 
@@ -69,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             // if number of cycle is more than one but the users don't have a break
             if ((cycleNo != 1)&&( breakNo ==0)) {
             // shoot dialog to confirm his set-up
+
+                DialogFragment newFragment = new ConfirmationDialog();
+                newFragment.show(getSupportFragmentManager(),"confirm");
             } else {
                 // start activity;
                 goClockTick();
@@ -78,18 +86,27 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
 
     // method to create intent to start countdown activity,
     public void goClockTick() {
-        Intent intent = new Intent(this, ClockTick.class);
-        intent.putExtra(SEND_CYCLE,cycleNo);
-        intent.putExtra(SEND_WORK, workNo);
-        intent.putExtra(SEND_BREAK, breakNo);
+        Intent clockIntent = new Intent(this, ClockTick.class);
+        clockIntent.putExtra(SEND_CYCLE,cycleNo);
+        clockIntent.putExtra(SEND_WORK, workNo);
+        clockIntent.putExtra(SEND_BREAK, breakNo);
 
-        Intent serNotificationIntent = new Intent(this, SerNotification.class);
-        serNotificationIntent.putExtra(SEND_CYCLE, cycleNo);
-        serNotificationIntent.putExtra(SEND_WORK, workNo);
-        serNotificationIntent.putExtra(SEND_BREAK, breakNo);
+        Runnable run = new Runnable() {
 
-        startService(serNotificationIntent);
-        startActivity(intent);
+            @Override
+            public void run() {
+                Intent serNotificationIntent = new Intent(getApplicationContext(), SerNotification.class);
+                serNotificationIntent.putExtra(SEND_CYCLE, cycleNo);
+                serNotificationIntent.putExtra(SEND_WORK, workNo);
+                serNotificationIntent.putExtra(SEND_BREAK, breakNo);
+                startService(serNotificationIntent);
+            }
+        };
+        Thread mythread = new Thread(run);
+        mythread.start();
+
+
+        startActivity(clockIntent);
 
     }
 
@@ -125,6 +142,16 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             MinuteDialog cycleD = (MinuteDialog) dialog;
             cycleSet.setText(cycleD.result);
             cycleNo = Long.parseLong(cycleD.result,10);
+            cycleNo = cycleNo*2;
+
+            if (cycleNo == 2){
+                breakNo = 0;
+                breakT.setVisibility(View.INVISIBLE);
+                breakSet.setVisibility(View.INVISIBLE);
+            } else {
+                breakT.setVisibility(View.VISIBLE);
+                breakSet.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -135,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             WorkBreakDialog workD = (WorkBreakDialog) dialog;
             workSet.setText(workD.newView);
             workNo = Long.parseLong(workD.newResult,10);
-            Toast.makeText(this, "workno is" + workNo,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "workno is " + workNo,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -145,6 +172,10 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             breakSet.setText(breakD.newView);
             breakNo = Long.parseLong(breakD.newResult,10);
         }
+    }
+
+    public void onNoticeClick(DialogFragment dialog){
+        goClockTick();
     }
 
     public void clickCycle ( View view) {

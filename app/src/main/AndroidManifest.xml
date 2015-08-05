@@ -23,14 +23,16 @@
         </activity>
         <activity
             android:name=".ClockTick"
+            android:label="@string/title_activity_clock_tick"
             android:launchMode="singleTop"
-            android:label="@string/title_activity_clock_tick" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
         <service
             android:name=".SerNotification"
             android:exported="false" >
         </service>
+
     </application>
 
 </manifest>

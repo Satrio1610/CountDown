@@ -8,16 +8,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 /**
- * Created by Tio on 8/2/2015.
+ * Created by Tio on 8/4/2015.
  */
-public class BreakDialog extends DialogFragment {
-    String[] number;
-    String[] hiddenNumber;
-    String newResult;
-    String newView;
+public class ConfirmationDialog extends DialogFragment {
 
     public interface NoticeDialogListener {
-        public void onBreakClick( DialogFragment dialog);
+        public void onNoticeClick( DialogFragment dialog);
     }
 
     NoticeDialogListener mListener  ;
@@ -25,7 +21,6 @@ public class BreakDialog extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         try {
             mListener = (NoticeDialogListener) activity;
         }catch ( ClassCastException e ) {
@@ -35,20 +30,28 @@ public class BreakDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        number = getResources().getStringArray(R.array.breakTime);
-        hiddenNumber = getResources().getStringArray(R.array.hiddenHour);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Don't forget to take a Break!")
-                .setItems(number,new DialogInterface.OnClickListener(){
 
+       AlertDialog.Builder builder =new  AlertDialog.Builder(getActivity());
+        builder.setTitle("No Break?")
+                .setMessage("Are you sure?")
+                .setPositiveButton("I AM!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        newResult = hiddenNumber[which];
-                        newView = number[which];
-                        mListener.onBreakClick(BreakDialog.this);
+                        mListener.onNoticeClick(ConfirmationDialog.this);
+
+                    }
+                })
+                .setNegativeButton("IT'S A MISTAKE!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ;
+
                     }
                 });
+
         return builder.create();
+
+        }
     }
-}
+

@@ -43,7 +43,6 @@ public class WorkBreakDialog extends DialogFragment {
         number = getResources().getStringArray(R.array.workTime);
         hiddenNumber = getResources().getStringArray(R.array.hiddenHour);
 
-        super.onCreate(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("So you want to work is it?")
                 .setItems(number,new DialogInterface.OnClickListener(){

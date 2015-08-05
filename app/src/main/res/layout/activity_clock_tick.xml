@@ -7,30 +7,28 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context="com.titaniumstick.countdown.ClockTick">
+    tools:context="com.titaniumstick.countdown.ClockTick"
+    android:weightSum="1"
+    android:background="#ffffac0f">
 
     <TextView
-        android:layout_marginBottom="20dp"
         android:id="@+id/clock"
         android:text="@string/hello_world"
         android:textSize="50sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"/>
-
+        android:textColor="#000000"
+        android:singleLine="false" />
 
     <TextView
-        android:id="@+id/statusW"
-        android:text="Wi-Fi status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/io"
-        android:text="On Wifi"
+        android:id="@+id/phase"
+        android:text="NEXT SEGMENT"
+        android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="wiFiPower"/>
+        android:typeface="normal"
+        android:textAlignment="center"
+        android:layout_gravity="center" />
 
 </LinearLayout>

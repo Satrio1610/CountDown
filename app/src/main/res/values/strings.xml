@@ -9,4 +9,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_clock_tick">Focus Timer</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_break_clock">BreakClockActivity</string>
+    <string name="breakNotificationTitle"> Breaktime\!</string>
+    <string name="breakNotificationText">Relax your mind! Do some stretching\! Keep in mind there are still some works left to do\!</string>
+    <string name="workNotificationTitle">Back to Work\!</string>
+    <string name="workNotificationText">Sharpen your focus!Flex your muscle\! It\'s time to give your best (again)\!</string>
+    <string name="cycleNotificationTitle">TIMER FINISHED\!</string>
+    <string name="cycleNotificationText">Pat yourself in the back for a job well done</string>
 </resources>
