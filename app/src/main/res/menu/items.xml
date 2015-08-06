@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/new_todo"
+        android:title="New"
+        android:icon="@mipmap/ic_action_new"
+        yourapp:showAsAction="always" />
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@mipmap/ic_action_settings"
+        yourapp:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        android:icon="@mipmap/ic_action_about"
+        yourapp:showAsAction="never" />
+
+
+</menu>

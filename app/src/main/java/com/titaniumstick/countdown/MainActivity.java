@@ -1,5 +1,6 @@
 package com.titaniumstick.countdown;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.view.MenuInflater;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
     }
     public void focusGo(View view){
@@ -55,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.items, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -71,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        super.onOptionsItemSelected(item);
+        Intent intentSettings = new Intent (this, SettingsActivity.class);
+        Intent intentAbout = new Intent (this, About.class);
+        Intent intentTodo = new Intent (this, TodoActivity.class);
+
+        switch(item.getItemId()){
+            case R.id.new_todo:
+                startActivity(intentTodo);
+                break;
+            case R.id.settings:
+                startActivity(intentSettings);
+                break;
+            case R.id.about:
+                startActivity(intentAbout);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
