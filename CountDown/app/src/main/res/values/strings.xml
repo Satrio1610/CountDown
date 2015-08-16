@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">CountDown</string>
+    <string name="button1">Start Focus!</string>
+    <string name="title">CYCLED TIMER</string>
+    <string name="cycleText">Number of Cycle    :</string>
+    <string name="workText">Work Duration/cycle :</string>
+    <string name="breakText">Break Duration/cycle :</string>
+    <string name="defaultOpt">Select Duration</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_clock_tick">Habit Package</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_break_clock">BreakClockActivity</string>
+    <string name="breakNotificationTitle"> Breaktime\!</string>
+    <string name="breakNotificationText">Relax your mind! Do some stretching\! Keep in mind there are still some works left to do\!</string>
+    <string name="workNotificationTitle">Back to Work\!</string>
+    <string name="workNotificationText">Sharpen your focus!Flex your muscle\! It\'s time to give your best (again)\!</string>
+    <string name="cycleNotificationTitle">TIMER FINISHED\!</string>
+    <string name="cycleNotificationText">Pat yourself in the back for a job well done</string>
+    <string name="title_activity_todo">To-Do List</string>
+    <string name="name_Setting">Name</string>
+    <string name="name_explanation">How should we address you?</string>
+
+    <string name="todo_list">To-Do List</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="title_activity_setting">Settings</string>
+    <string name="title_activity_setting_menu">setting_menu</string>
+</resources>

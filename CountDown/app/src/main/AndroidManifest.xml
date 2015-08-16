@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.titaniumstick.countdown" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/launcher2"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ClockTick"
+            android:label="@string/title_activity_clock_tick"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+
+        <service
+            android:name=".SerNotification"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name=".TodoActivity"
+            android:label="@string/title_activity_todo" >
+
+        </activity>
+        <activity
+            android:name=".setting_menu"
+            android:label="@string/title_activity_setting_menu" >
+        </activity>
+    </application>
+
+</manifest>
