@@ -38,7 +38,7 @@ public class MinuteDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         number = getResources().getStringArray(R.array.cycle);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("I am a cycle")
+        builder.setTitle("Choose Number of Cycle")
                 .setItems(number, new DialogInterface.OnClickListener() {
 
                     @Override

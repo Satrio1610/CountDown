@@ -9,7 +9,8 @@
     android:orientation="vertical"
     tools:context="com.titaniumstick.countdown.ClockTick"
     android:weightSum="1"
-    android:background="#ffffac0f">
+    android:background="#ffffac0f"
+    android:id="@+id/clockLayout">
 
     <TextView
         android:id="@+id/clock"

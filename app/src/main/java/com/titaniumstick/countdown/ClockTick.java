@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -17,16 +20,22 @@ import java.util.TimerTask;
 
 public class ClockTick extends AppCompatActivity {
 
-    long noCycle; // number of cycle the user is going to go through
-    long workH;
-    long breakH;
+    private long noCycle; // number of cycle the user is going to go through
+    private long workH;
+    private long breakH;
+    private static boolean isPaused = false;
+    private static boolean clockEnd = false;
     Intent goBack;
     Intent intent;
     TextView countDown;
     TextView phaseShift;
-    static boolean isPaused = false;
-    static boolean clockEnd = false;
     Timer timer;
+    View currentView;
+
+    @Override
+    public void onBackPressed() {;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +54,8 @@ public class ClockTick extends AppCompatActivity {
         CountClock breakClock = new CountClock(breakH,1000,"WORK");
         workClock.setPair(breakClock);
         breakClock.setPair(workClock);
+       currentView = new View(getBaseContext());
+        currentView =  findViewById(R.id.clockLayout);
 
         timer = new Timer();
 
@@ -65,6 +76,15 @@ public class ClockTick extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(clockEnd){
+
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         isPaused= true;
@@ -76,7 +96,7 @@ public class ClockTick extends AppCompatActivity {
         isPaused = false;
 
         if (clockEnd){
-            startActivity(goBack);
+            finish();
         }
 
     }
@@ -123,13 +143,22 @@ public class ClockTick extends AppCompatActivity {
                     if (isPaused) {
                         clockEnd = true;
                     } else {
-                        startActivity(goBack);
+                        finish();
                     }
                 } else {
                     phaseShift.setText(nextPhase);
+                    if(phaseShift.getText().equals("BREAK")){
+
+                        currentView.setBackgroundColor(0xffffffff);
+
+                    }
+                    else {currentView.setBackgroundColor(0xffffac0f);}
+
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
+
+
                             clock2.start();
                         }
                     },2000);
@@ -191,6 +220,11 @@ public class ClockTick extends AppCompatActivity {
         String result = hourS + ":" + minS + ":" + secS;
         return result;
     }
+    public static boolean checkPause() {
+        return isPaused;
+    }
+
+
 
 
 

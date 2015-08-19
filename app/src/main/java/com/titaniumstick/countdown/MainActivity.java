@@ -1,12 +1,16 @@
 package com.titaniumstick.countdown;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,14 +37,17 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
     public final static String SEND_CYCLE = "com.titaniumstick.countdownver2.CYCLE";
     public final static String SEND_WORK = "com.titaniumstick.countdownver2.WORK";
     public final static String SEND_BREAK = "com.titaniumstick.countdownver2.BREAK";
+    private static final String PREFS = "prefs";
+    private static final String PREF_NAME = "name_setting";
+    SharedPreferences mSharedPreferences;
 
     Button cycleSet;
     Button workSet;
     Button breakSet;
     // result variable
-    long cycleNo = 4;
-    long workNo = 0;
-    long breakNo = 0;
+    private long cycleNo = 4;
+    private long workNo = 0;
+    private long breakNo = 0;
 
     TextView breakT;
 
@@ -54,10 +61,22 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
         workSet = (Button) findViewById(R.id.workButton);
         breakSet = (Button) findViewById(R.id.breakButton);
         breakT = (TextView) findViewById(R.id.breakText);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        displayWelcome();
+
 
 
 
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+
+        outState.putString(SEND_BREAK,"haha");
+        super.onSaveInstanceState(outState);
+    }
+
     // this method is used to check the user's input, and give suitable response
     // pre condition :
     // post condition: shoot method to collect the data as intent's  extra and shoot the relevant activity
@@ -72,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             Toast.makeText(this,"You don't have any working duration!", Toast.LENGTH_LONG).show();
         } else {
             // if number of cycle is more than one but the users don't have a break
-            if ((cycleNo != 1)&&( breakNo ==0)) {
+            if ((cycleNo != 2)&&( breakNo ==0)) {
             // shoot dialog to confirm his set-up
 
                 DialogFragment newFragment = new ConfirmationDialog();
@@ -115,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.items, menu);
         return true;
     }
 
@@ -131,6 +150,22 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             return true;
         }
 
+        super.onOptionsItemSelected(item);
+        //Intent intentSettings = new Intent (this, ettingsActivity.class);
+        //Intent intentAbout = new Intent (this, About.class);
+        Intent intentTodo = new Intent (this, TodoActivity.class);
+        Intent intentSettings = new Intent (this, setting_menu.class);
+        switch(item.getItemId()){
+            case R.id.new_todo:
+                startActivity(intentTodo);
+                break;
+            case R.id.settings:
+               startActivity(intentSettings);
+                break;
+           // case R.id.about:
+              //  startActivity(intentAbout);
+               // break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,10 +177,9 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             MinuteDialog cycleD = (MinuteDialog) dialog;
             cycleSet.setText(cycleD.result);
             cycleNo = Long.parseLong(cycleD.result,10);
-            cycleNo = cycleNo*2;
+            cycleNo = cycleNo * 2;
 
             if (cycleNo == 2){
-                breakNo = 0;
                 breakT.setVisibility(View.INVISIBLE);
                 breakSet.setVisibility(View.INVISIBLE);
             } else {
@@ -162,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
             WorkBreakDialog workD = (WorkBreakDialog) dialog;
             workSet.setText(workD.newView);
             workNo = Long.parseLong(workD.newResult,10);
-            Toast.makeText(this, "workno is " + workNo,Toast.LENGTH_LONG).show();
         }
     }
 
@@ -180,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
 
     public void clickCycle ( View view) {
         DialogFragment newFragment = new MinuteDialog();
-        newFragment.show(getSupportFragmentManager(),"cycle");
+        newFragment.show(getSupportFragmentManager(), "cycle");
     }
 
     public void clickWork ( View view) {
@@ -191,6 +224,59 @@ public class MainActivity extends AppCompatActivity implements MinuteDialog.Noti
     public void clickBreak ( View view) {
         DialogFragment newFragment = new BreakDialog();
         newFragment.show(getSupportFragmentManager(),"break");
+    }
+
+    public void displayWelcome() {
+
+        // Access the device's key-value storage
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Read the user's name,
+        // or an empty string if nothing found
+        String name = mSharedPreferences.getString(PREF_NAME, "");
+
+        if (name.length() > 0) {
+
+            // If the name is valid, display a Toast welcoming them
+            Toast.makeText(this, "Welcome back, " + name + "!", Toast.LENGTH_LONG).show();
+        } else {
+            // otherwise, show a dialog to ask for their name
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Hello! Welcome to FocusApp!");
+            alert.setMessage("What is your name?");
+
+            // Create EditText for entry
+            final EditText input = new EditText(this);
+            alert.setView(input);
+
+            // Make an "OK" button to save the name
+            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    // Grab the EditText's input
+                    String inputName = input.getText().toString();
+
+                    // Put it into memory (don't forget to commit!)
+                    SharedPreferences.Editor e = mSharedPreferences.edit();
+                    e.putString(PREF_NAME, inputName);
+                    e.commit();
+
+                    // Welcome the new user
+                    Toast.makeText(getApplicationContext(), "Welcome, " + inputName + "!", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            // Make a "Cancel" button
+            // that simply dismisses the alert
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int whichButton) {}
+            });
+
+            alert.show();
+        }
+
     }
 }
 

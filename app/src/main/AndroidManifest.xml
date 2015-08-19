@@ -2,15 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.titaniumstick.countdown" >
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
-    </uses-permission>
-
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:debuggable="true"
+        android:icon="@mipmap/launcher2"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
@@ -25,7 +22,7 @@
             android:name=".ClockTick"
             android:label="@string/title_activity_clock_tick"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         </activity>
 
         <service
@@ -33,6 +30,18 @@
             android:exported="false" >
         </service>
 
+        <activity
+            android:name=".TodoActivity"
+            android:label="@string/title_activity_todo" >
+        </activity>
+        <activity
+            android:name=".setting_menu"
+            android:label="@string/title_activity_setting_menu" >
+        </activity>
+        <activity
+            android:name=".ProgressReport"
+            android:label="@string/title_activity_progress_report" >
+        </activity>
     </application>
 
 </manifest>

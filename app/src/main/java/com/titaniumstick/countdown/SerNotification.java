@@ -21,16 +21,16 @@ public class SerNotification extends IntentService {
     public SerNotification() {
         super("SerNotification");
     }
-    Long nCycle;
-    Long wHour;
-    Long bHour;
-    long tHour = -1;
-    String workText = "Sharpen your focus! Flex your muscle! It's time to give your best(again)!";
-    String workTitle = " Back to Work!";
-    String breakText ="Relax your mind! Do some stretching! Keep in mind there are still some works left to do!";
-    String breakTitle="Breaktime!";
-    String cycleTitle ="TIMER FINISHED!!";
-    String cycleText = "Pat yourself in the back for a job well done!";
+    private Long nCycle;
+    private Long wHour;
+    private Long bHour;
+    private long tHour = -1;
+    private String workText = "Sharpen your focus! Flex your muscle! It's time to give your best(again)!";
+    private String workTitle = " Back to Work!";
+    private String breakText ="Relax your mind! Do some stretching! Keep in mind there are still some works left to do!";
+    private String breakTitle="Breaktime!";
+    private String cycleTitle ="TIMER FINISHED!!";
+    private String cycleText = "Pat yourself in the back for a job well done!";
     PendingIntent pendingTimerStart;
 
 
@@ -41,12 +41,13 @@ public class SerNotification extends IntentService {
         nCycle = intent.getLongExtra(MainActivity.SEND_CYCLE, 1000);
 
         Intent timerNotification = new Intent ( this,ClockTick.class);
+        Intent returnNotification = new Intent(this,MainActivity.class);
 
         pendingTimerStart = PendingIntent.getActivity(this, 0, timerNotification,PendingIntent.FLAG_UPDATE_CURRENT);
 
         final NotificationCompat.Builder serPhaseNotif = new NotificationCompat.Builder(this)
                 .setContentIntent(pendingTimerStart)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.launcher2)
                 .setAutoCancel(true);
 
         final int serPhaseNotificationID = 001;
@@ -57,12 +58,13 @@ public class SerNotification extends IntentService {
 
             if ( iter== nCycle -1 ) {
                 tHour = tHour + wHour;
-
+                // update pending intent to bring the user back to the MainActivity.class
+                pendingTimerStart = PendingIntent.getActivity(this, 0, returnNotification,PendingIntent.FLAG_UPDATE_CURRENT);
 
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if (ClockTick.isPaused) {
+                        if (ClockTick.checkPause()) {
                             serPhaseNotif.setContentTitle(cycleTitle)
                                     .setContentText(cycleText);
 
@@ -78,7 +80,7 @@ public class SerNotification extends IntentService {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if(ClockTick.isPaused) {
+                        if(ClockTick.checkPause()) {
                             serPhaseNotif.setContentTitle(breakTitle)
                                     .setContentText(breakText);
                             mNotifyMgr.cancel(serPhaseNotificationID);
@@ -95,7 +97,7 @@ public class SerNotification extends IntentService {
 
                     @Override
                     public void run() {
-                        if(ClockTick.isPaused){
+                        if(ClockTick.checkPause()){
                             serPhaseNotif.setContentTitle(workTitle)
                                     .setContentText(workText);
 
